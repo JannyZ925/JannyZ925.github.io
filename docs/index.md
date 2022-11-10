@@ -10,5 +10,5 @@ hero:
       link: /category/knowledge
     - theme: alt
       text: 在GitHub查看
-      link: https://github.com/JannyZ925
+      link: https://github.com/JannyZ925/JannyZ925.github.io
 ---
