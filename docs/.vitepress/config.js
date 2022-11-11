@@ -12,7 +12,8 @@ export default {
         },
         nav: [
             { text: '首页', link: '/' },
-            { text: '分类', link: '/category/knowledge' },
+            { text: '知识', link: '/category/knowledge/vue/vue_cli' },
+            { text: '随笔', link: '/category/jottings/jottings' },
         ],
         socialLinks: [
             { icon: 'github', link: 'https://github.com/JannyZ925' },
@@ -28,14 +29,38 @@ export default {
             //     }
             // ],
 
-            '/category/': [
+            '/category/knowledge/': [
                 {
-                    text: '分类',
+                    text: '知识',
                     items: [
                         // This shows `/category/index.md` page.
-                        { text: '知识', link: '/category/knowledge' }, 
-                        { text: '随笔', link: '/category/jottings' }
+                        {
+                            text: 'vue',
+                            items: [
+                                {
+                                    text: '基础',
+                                    link: '/category/knowledge/vue/vue_base'
+                                },
+                                {
+                                    text: '脚手架',
+                                    link: '/category/knowledge/vue/vue_cli'
+                                }
+                            ]
+                        }
                     ]
+                }
+            ],
+            '/category/jottings/': [
+                {
+                    text: '随笔',
+                    items: [
+                        {
+                            text: 'jottings',
+                            link: '/category/jottings/jottings'
+                        }
+                    ]
+
+
                 }
             ],
         },

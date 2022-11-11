@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: Janny 的博客
-  tagline: 行则将至。
+  tagline: 行则将至
   actions:
     - theme: brand
       text: 开始阅读
