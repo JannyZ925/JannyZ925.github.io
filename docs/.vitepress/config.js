@@ -64,9 +64,8 @@ export default {
                 }
             ],
         },
-        markdown: {
-            theme: 'material-palenight',
-            lineNumbers: true
+        footer: {
+            message: 'Created By Janny'
         },
         // carbonAds: {
         //     code: 'your-carbon-code',
@@ -76,9 +75,9 @@ export default {
         //     pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
         //     text: '去github修改这个页面'
         //   },
-        footer: {
-            message: 'Created By Janny'
-        }
-
+    },
+    markdown: {
+        theme: 'material-palenight',
+        lineNumbers: true
     }
 }

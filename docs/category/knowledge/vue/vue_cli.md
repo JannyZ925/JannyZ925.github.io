@@ -22,8 +22,8 @@
 ## 关于不同版本的Vue
 
 1. vue.js与vue.runtime.xxx.js的区别：
-    1. vue.js是完整版的Vue，包含：核心功能 + 模板解析器。
-    2. vue.runtime.xxx.js是运行版的Vue，只包含：核心功能；没有模板解析器。
+   1. vue.js是完整版的Vue，包含：核心功能 + 模板解析器。
+   2. vue.runtime.xxx.js是运行版的Vue，只包含：核心功能；没有模板解析器。
 2. 因为vue.runtime.xxx.js没有模板解析器，所以不能使用template这个配置项，需要使用render函数接收到的createElement函数去指定具体内容。
 
 ## vue.config.js配置文件
@@ -36,8 +36,8 @@
 1. 被用来给元素或子组件注册引用信息(id的替代者)
 2. 应用在html标签上获取的是真实DOM元素，应用在组件标签上是组件实例对象
 3. 使用方式：
-    1. 打标识：```<h1 ref="xxx">.....</h1>``` 或 ```<School ref="xxx"></School>```
-    2. 获取：```this.$refs.xxx```
+   1. 打标识：```<h1 ref="xxx">.....</h1>``` 或 ```<School ref="xxx"></School>```
+   2. 获取：```this.$refs.xxx```
 
 ## props配置项
 
@@ -47,21 +47,21 @@
 
 3. 接收数据：
 
-    1. 第一种方式（只接收）：```props:['name'] ```
+   1. 第一种方式（只接收）：```props:['name'] ```
 
-    2. 第二种方式（限制类型）：```props:{name:String}```
+   2. 第二种方式（限制类型）：```props:{name:String}```
 
-    3. 第三种方式（限制类型、限制必要性、指定默认值）：
+   3. 第三种方式（限制类型、限制必要性、指定默认值）：
 
-        ```
-         props:{
-             name:{
-               type:String, //类型
-               required:true, //必要性
-               default:'老王' //默认值
-             }
+      ```
+      props:{
+         name:{
+         type:String, //类型
+         required:true, //必要性
+         default:'老王' //默认值
          }
-         ```
+      }
+      ```
 
    > 备注：props是只读的，Vue底层会监测你对props的修改，如果进行了修改，就会发出警告，若业务需求确实需要修改，那么请复制props的内容到data中一份，然后去修改data中的数据。
 
@@ -71,13 +71,13 @@
 
    第一步 定义混入：
 
-    ```
-    {
-        data(){....},
-        methods:{....}
-        ....
-    }
-    ```
+   ```
+   {
+      data(){....},
+      methods:{....}
+      ....
+   }
+   ```
 
    第二步 使用混入：
 
@@ -89,21 +89,21 @@
 2. 包含install方法的一个对象，install的第一个参数是Vue,第二个及以后的参数是插件使用者传递的数据
 3. 定义插件
    ```
-    对象.install = function (Vue, options) {
-        // 1. 添加全局过滤器
-        Vue.filter(....)
-    
-        // 2. 添加全局指令
-        Vue.directive(....)
-    
-        // 3. 配置全局混入(合)
-        Vue.mixin(....)
-    
-        // 4. 添加实例方法
-        Vue.prototype.$myMethod = function () {...}
-        Vue.prototype.$myProperty = xxxx
-    }
-    ```
+   对象.install = function (Vue, options) {
+      // 1. 添加全局过滤器
+      Vue.filter(....)
+   
+      // 2. 添加全局指令
+      Vue.directive(....)
+   
+      // 3. 配置全局混入(合)
+      Vue.mixin(....)
+   
+      // 4. 添加实例方法
+      Vue.prototype.$myMethod = function () {...}
+      Vue.prototype.$myProperty = xxxx
+   }
+   ```
 4. 使用插件：```Vue.use()```
 
 ## scoped样式
@@ -111,7 +111,7 @@
 1. 作用：让样式在局部生效，防止冲突。
 2. 写法：```<style scoped>```
 
-## 总结TodoList案例
+## TodoList案例
 
 1. 组件化编码流程：
 
@@ -119,9 +119,9 @@
 
    (2).实现动态组件：考虑好数据的存放位置，数据是一个组件在用，还是一些组件在用：
 
-   			1).一个组件在用：放在组件自身即可。
+      - 一个组件在用：放在组件自身即可。
 
-   			2). 一些组件在用：放在他们共同的父组件上（<span style="color:red">状态提升</span>）。
+      - 一些组件在用：放在他们共同的父组件上（<span style="color:red">状态提升</span>）。
 
    (3).实现交互：从绑定事件开始。
 
@@ -177,13 +177,13 @@
 
    2. 第二种方式，在父组件中：
 
-       ```js
-       <Demo ref="demo"/>
-       ......
-       mounted(){
-          this.$refs.xxx.$on('atguigu',this.test)
-       }
-       ```
+      ```js
+      <Demo ref="demo"/>
+      ......
+      mounted(){
+         this.$refs.xxx.$on('atguigu',this.test)
+      }
+      ```
 
    3. 若想让自定义事件只能触发一次，可以使用```once```修饰符，或```$once```方法。
 
@@ -296,11 +296,11 @@
 
 	在vue.config.js中添加如下配置：
 
-```js
-devServer:{
-  proxy:"http://localhost:5000"
-}
-```
+   ```js
+   devServer:{
+      proxy:"http://localhost:5000"
+   }
+   ```
 
 说明：
 
@@ -312,29 +312,29 @@ devServer:{
 
 	编写vue.config.js配置具体代理规则：
 
-```js
-module.exports = {
-	devServer: {
-      proxy: {
-      '/api1': {// 匹配所有以 '/api1'开头的请求路径
-        target: 'http://localhost:5000',// 代理目标的基础路径
-        changeOrigin: true,
-        pathRewrite: {'^/api1': ''}
-      },
-      '/api2': {// 匹配所有以 '/api2'开头的请求路径
-        target: 'http://localhost:5001',// 代理目标的基础路径
-        changeOrigin: true,
-        pathRewrite: {'^/api2': ''}
+   ```js
+   module.exports = {
+      devServer: {
+         proxy: {
+            '/api1': {// 匹配所有以 '/api1'开头的请求路径
+               target: 'http://localhost:5000',// 代理目标的基础路径
+               changeOrigin: true,
+               pathRewrite: {'^/api1': ''}
+            },
+            '/api2': {// 匹配所有以 '/api2'开头的请求路径
+               target: 'http://localhost:5001',// 代理目标的基础路径
+               changeOrigin: true,
+               pathRewrite: {'^/api2': ''}
+            }
+         }
       }
-    }
-  }
-}
-/*
-   changeOrigin设置为true时，服务器收到的请求头中的host为：localhost:5000
-   changeOrigin设置为false时，服务器收到的请求头中的host为：localhost:8080
-   changeOrigin默认值为true
-*/
-```
+   }
+   /*
+      changeOrigin设置为true时，服务器收到的请求头中的host为：localhost:5000
+      changeOrigin设置为false时，服务器收到的请求头中的host为：localhost:8080
+      changeOrigin默认值为true
+   */
+   ```
 
 说明：
 
@@ -353,39 +353,39 @@ module.exports = {
 
       ```vue
       父组件中：
-              <Category>
-                 <div>html结构1</div>
-              </Category>
+         <Category>
+            <div>html结构1</div>
+         </Category>
       子组件中：
-              <template>
-                  <div>
-                     <!-- 定义插槽 -->
-                     <slot>插槽默认内容...</slot>
-                  </div>
-              </template>
+         <template>
+            <div>
+               <!-- 定义插槽 -->
+               <slot>插槽默认内容...</slot>
+            </div>
+         </template>
       ```
 
    2. 具名插槽：
 
       ```vue
       父组件中：
-              <Category>
-                  <template slot="center">
-                    <div>html结构1</div>
-                  </template>
-      
-                  <template v-slot:footer>
-                     <div>html结构2</div>
-                  </template>
-              </Category>
+         <Category>
+            <template slot="center">
+               <div>html结构1</div>
+            </template>
+
+            <template v-slot:footer>
+               <div>html结构2</div>
+            </template>
+         </Category>
       子组件中：
-              <template>
-                  <div>
-                     <!-- 定义插槽 -->
-                     <slot name="center">插槽默认内容...</slot>
-                     <slot name="footer">插槽默认内容...</slot>
-                  </div>
-              </template>
+         <template>
+            <div>
+               <!-- 定义插槽 -->
+               <slot name="center">插槽默认内容...</slot>
+               <slot name="footer">插槽默认内容...</slot>
+            </div>
+         </template>
       ```
 
    3. 作用域插槽：
@@ -396,54 +396,52 @@ module.exports = {
 
          ```vue
          父组件中：
-         		<Category>
-         			<template scope="scopeData">
-         				<!-- 生成的是ul列表 -->
-         				<ul>
-         					<li v-for="g in scopeData.games" :key="g">{{g}}</li>
-         				</ul>
-         			</template>
-         		</Category>
-         
-         		<Category>
-         			<template slot-scope="scopeData">
-         				<!-- 生成的是h4标题 -->
-         				<h4 v-for="g in scopeData.games" :key="g">{{g}}</h4>
-         			</template>
-         		</Category>
+            <Category>
+               <template scope="scopeData">
+                  <!-- 生成的是ul列表 -->
+                  <ul>
+                     <li v-for="g in scopeData.games" :key="g">{{g}}</li>
+                  </ul>
+               </template>
+            </Category>
+        
+            <Category>
+               <template slot-scope="scopeData">
+                  <!-- 生成的是h4标题 -->
+                  <h4 v-for="g in scopeData.games" :key="g">{{g}}</h4>
+               </template>
+            </Category>
+
          子组件中：
-                 <template>
-                     <div>
-                         <slot :games="games"></slot>
-                     </div>
-                 </template>
-         		
-                 <script>
-                     export default {
-                         name:'Category',
-                         props:['title'],
-                         //数据在子组件自身
-                         data() {
-                             return {
-                                 games:['红色警戒','穿越火线','劲舞团','超级玛丽']
-                             }
-                         },
+            <template>
+               <div>
+                  <slot :games="games"></slot>
+               </div>
+            </template>
+        
+            <script>
+               export default {
+                  name:'Category',
+                  props:['title'],
+                  //数据在子组件自身
+                  data() {
+                     return {
+                        games:['红色警戒','穿越火线','劲舞团','超级玛丽']
                      }
-                 </script>
+                  },
+               }
+            </script>
          ```
-   ```
-   
-   ```
 
 ## Vuex
 
 ### 1.概念
 
-		在Vue中实现集中式状态（数据）管理的一个Vue插件，对vue应用中多个组件的共享状态进行集中式的管理（读/写），也是一种组件间通信的方式，且适用于任意组件间通信。
+   在Vue中实现集中式状态（数据）管理的一个Vue插件，对vue应用中多个组件的共享状态进行集中式的管理（读/写），也是一种组件间通信的方式，且适用于任意组件间通信。
 
 ### 2.何时使用？
 
-		多个组件需要共享数据时
+   多个组件需要共享数据时
 
 ### 3.搭建vuex环境
 
@@ -488,7 +486,7 @@ module.exports = {
    })
    ```
 
-###    4.基本使用
+### 4.基本使用
 
 1. 初始化数据、配置```actions```、配置```mutations```，操作文件```store.js```
 
@@ -533,7 +531,9 @@ module.exports = {
 
 3. 组件中修改vuex中的数据：```$store.dispatch('action中的方法名',数据)``` 或 ```$store.commit('mutations中的方法名',数据)```
 
-   >  备注：若没有网络请求或其他业务逻辑，组件中也可以越过actions，即不写```dispatch```，直接编写```commit```
+   ::: tip
+      若没有网络请求或其他业务逻辑，组件中也可以越过actions，即不写```dispatch```，直接编写```commit```
+   :::
 
 ### 5.getters的使用
 
@@ -565,11 +565,11 @@ module.exports = {
 
    ```js
    computed: {
-       //借助mapState生成计算属性：sum、school、subject（对象写法）
-        ...mapState({sum:'sum',school:'school',subject:'subject'}),
-            
-       //借助mapState生成计算属性：sum、school、subject（数组写法）
-       ...mapState(['sum','school','subject']),
+      //借助mapState生成计算属性：sum、school、subject（对象写法）
+      ...mapState({sum:'sum',school:'school',subject:'subject'}),
+         
+      //借助mapState生成计算属性：sum、school、subject（数组写法）
+      ...mapState(['sum','school','subject']),
    },
    ```
 
@@ -577,11 +577,11 @@ module.exports = {
 
    ```js
    computed: {
-       //借助mapGetters生成计算属性：bigSum（对象写法）
-       ...mapGetters({bigSum:'bigSum'}),
-   
-       //借助mapGetters生成计算属性：bigSum（数组写法）
-       ...mapGetters(['bigSum'])
+      //借助mapGetters生成计算属性：bigSum（对象写法）
+      ...mapGetters({bigSum:'bigSum'}),
+
+      //借助mapGetters生成计算属性：bigSum（数组写法）
+      ...mapGetters(['bigSum'])
    },
    ```
 
@@ -589,11 +589,11 @@ module.exports = {
 
    ```js
    methods:{
-       //靠mapActions生成：incrementOdd、incrementWait（对象形式）
-       ...mapActions({incrementOdd:'jiaOdd',incrementWait:'jiaWait'})
-   
-       //靠mapActions生成：incrementOdd、incrementWait（数组形式）
-       ...mapActions(['jiaOdd','jiaWait'])
+      //靠mapActions生成：incrementOdd、incrementWait（对象形式）
+      ...mapActions({incrementOdd:'jiaOdd',incrementWait:'jiaWait'})
+
+      //靠mapActions生成：incrementOdd、incrementWait（数组形式）
+      ...mapActions(['jiaOdd','jiaWait'])
    }
    ```
 
@@ -601,15 +601,17 @@ module.exports = {
 
    ```js
    methods:{
-       //靠mapActions生成：increment、decrement（对象形式）
-       ...mapMutations({increment:'JIA',decrement:'JIAN'}),
-       
-       //靠mapMutations生成：JIA、JIAN（对象形式）
-       ...mapMutations(['JIA','JIAN']),
+      //靠mapActions生成：increment、decrement（对象形式）
+      ...mapMutations({increment:'JIA',decrement:'JIAN'}),
+      
+      //靠mapMutations生成：JIA、JIAN（对象形式）
+      ...mapMutations(['JIA','JIAN']),
    }
    ```
 
-> 备注：mapActions与mapMutations使用时，若需要传递参数，需要在模板中绑定事件时传递好参数，否则参数是事件对象。
+   ::: warning
+      mapActions与mapMutations使用时，若需要传递参数，需要在模板中绑定事件时传递好参数，否则参数是事件对象。
+   :::
 
 ### 7.模块化+命名空间
 
@@ -619,29 +621,29 @@ module.exports = {
 
    ```javascript
    const countAbout = {
-     namespaced:true,//开启命名空间
-     state:{x:1},
-     mutations: { ... },
-     actions: { ... },
-     getters: {
-       bigSum(state){
-          return state.sum * 10
-       }
-     }
+      namespaced:true,//开启命名空间
+      state:{x:1},
+      mutations: { ... },
+      actions: { ... },
+      getters: {
+         bigSum(state){
+            return state.sum * 10
+         }
+      }
    }
    
    const personAbout = {
-     namespaced:true,//开启命名空间
-     state:{ ... },
-     mutations: { ... },
-     actions: { ... }
+      namespaced:true,//开启命名空间
+      state:{ ... },
+      mutations: { ... },
+      actions: { ... }
    }
    
    const store = new Vuex.Store({
-     modules: {
-       countAbout,
-       personAbout
-     }
+      modules: {
+         countAbout,
+         personAbout
+      }
    })
    ```
 
@@ -781,13 +783,13 @@ module.exports = {
    				
    <!-- 跳转并携带query参数，to的对象写法 -->
    <router-link 
-   	:to="{
-   		path:'/home/message/detail',
-   		query:{
-   		   id:666,
-           title:'你好'
-   		}
-   	}"
+      :to="{
+         path:'/home/message/detail',
+         query:{
+            id:666,
+            title:'你好'
+         }
+      }"
    >跳转</router-link>
    ```
 
@@ -808,21 +810,21 @@ module.exports = {
 
       ```js
       {
-      	path:'/demo',
-      	component:Demo,
-      	children:[
-      		{
-      			path:'test',
-      			component:Test,
-      			children:[
-      				{
-                        name:'hello' //给路由命名
-      					path:'welcome',
-      					component:Hello,
-      				}
-      			]
-      		}
-      	]
+         path:'/demo',
+         component:Demo,
+         children:[
+            {
+               path:'test',
+               component:Test,
+               children:[
+                  {
+                     name:'hello' //给路由命名
+                     path:'welcome',
+                     component:Hello,
+                  }
+               ]
+            }
+         ]
       }
       ```
 
@@ -837,13 +839,13 @@ module.exports = {
       
       <!--简化写法配合传递参数 -->
       <router-link 
-      	:to="{
-      		name:'hello',
-      		query:{
-      		      id:666,
-                  title:'你好'
-      		}
-      	}"
+         :to="{
+            name:'hello',
+            query:{
+               id:666,
+               title:'你好'
+            }
+         }"
       >跳转</router-link>
       ```
 
@@ -879,21 +881,23 @@ module.exports = {
    ```vue
    <!-- 跳转并携带params参数，to的字符串写法 -->
    <router-link :to="/home/message/detail/666/你好">跳转</router-link>
-   				
+               
    <!-- 跳转并携带params参数，to的对象写法 -->
    <router-link 
-   	:to="{
-   		name:'xiangqing',
-   		params:{
-   		   id:666,
-               title:'你好'
-   		}
-   	}"
+      :to="{
+         name:'xiangqing',
+         params:{
+            id:666,
+            title:'你好'
+         }
+      }"
    >跳转</router-link>
    ```
 
-   > 特别注意：路由携带params参数时，若使用to的对象写法，则不能使用path配置项，必须使用name配置！
-   > 如果路由要求传递params参数，但跳转时没有传递，URL会出现问题，如何指定params参数可传可不传：配置路由时，在占位的后面加上?即可，如detail/:id?
+   ::: danger
+      1. 路由携带params参数时，若使用to的对象写法，则不能使用path配置项，必须使用name配置！
+      2. 如果路由要求传递params参数，但跳转时没有传递，URL会出现问题，如何指定params参数可传可不传：配置路由时，在占位的后面加上?即可，如detail/:id?
+   :::
 
 3. 接收参数：
 
@@ -943,19 +947,19 @@ module.exports = {
    ```js
    //$router的两个API
    this.$router.push({
-   	name:'xiangqing',
-   		params:{
-   			id:xxx,
-   			title:xxx
-   		}
+      name:'xiangqing',
+      params:{
+         id:xxx,
+         title:xxx
+      }
    })
    
    this.$router.replace({
-   	name:'xiangqing',
-   		params:{
-   			id:xxx,
-   			title:xxx
-   		}
+      name:'xiangqing',
+      params:{
+         id:xxx,
+         title:xxx
+      }
    })
    this.$router.forward() //前进
    this.$router.back() //后退
@@ -970,16 +974,16 @@ module.exports = {
 
    ```vue
    <keep-alive include="News"> 
-       <router-view></router-view>
+      <router-view></router-view>
    </keep-alive>
    ```
 
 ### 11.两个新的生命周期钩子
 
 1. 作用：路由组件所独有的两个钩子，用于捕获路由组件的激活状态。
-2. 具体名字：
-   1. ```activated```路由组件被激活时触发。
-   2. ```deactivated```路由组件失活时触发。
+2. 具体名字： 
+   1. ```activated```:路由组件被激活时触发。
+   2. ```deactivated```:路由组件失活时触发。
 
 ### 12.路由守卫
 
@@ -991,46 +995,46 @@ module.exports = {
 
    ```js
    //全局前置守卫：初始化时执行、每次路由切换前执行
-   router.beforeEach((to,from,next)=>{
-   	console.log('beforeEach',to,from)
-   	if(to.meta.isAuth){ //判断当前路由是否需要进行权限控制
-   		if(localStorage.getItem('school') === 'atguigu'){ //权限控制的具体规则
-   			next() //放行
-   		}else{
-   			alert('暂无权限查看')
-   			// next({name:'guanyu'})
-   		}
-   	}else{
-   		next() //放行
-   	}
+   router.beforeEach((to,from,next) => {
+      console.log('beforeEach',to,from)
+      if(to.meta.isAuth) { //判断当前路由是否需要进行权限控制
+         if(localStorage.getItem('school') === 'atguigu') { //权限控制的具体规则
+            next() //放行
+         } else {
+            alert('暂无权限查看')
+            // next({name:'guanyu'})
+         }
+      } else {
+         next() //放行
+      }
    })
    
    //全局后置守卫：初始化时执行、每次路由切换后执行
-   router.afterEach((to,from)=>{
-   	console.log('afterEach',to,from)
-   	if(to.meta.title){ 
-   		document.title = to.meta.title //修改网页的title
-   	}else{
-   		document.title = 'vue_test'
-   	}
+   router.afterEach((to,from) => {
+      console.log('afterEach',to,from)
+      if(to.meta.title) { 
+         document.title = to.meta.title //修改网页的title
+      } else {
+         document.title = 'vue_test'
+      }
    })
    ```
 
 4. 独享守卫:
 
    ```js
-   beforeEnter(to,from,next){
-   	console.log('beforeEnter',to,from)
-   	if(to.meta.isAuth){ //判断当前路由是否需要进行权限控制
-   		if(localStorage.getItem('school') === 'atguigu'){
-   			next()
-   		}else{
-   			alert('暂无权限查看')
-   			// next({name:'guanyu'})
-   		}
-   	}else{
-   		next()
-   	}
+   beforeEnter(to,from,next) {
+      console.log('beforeEnter',to,from)
+      if(to.meta.isAuth) { //判断当前路由是否需要进行权限控制
+         if(localStorage.getItem('school') === 'atguigu') {
+            next()
+         } else {
+            alert('暂无权限查看')
+            // next({name:'guanyu'})
+         }
+      } else {
+         next()
+      }
    }
    ```
 
