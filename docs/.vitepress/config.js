@@ -13,7 +13,7 @@ export default {
         nav: [
             { text: '首页', link: '/' },
             { text: '知识', link: '/category/knowledge/vue/vue_cli' },
-            { text: '随笔', link: '/category/jottings/jottings' },
+            { text: '随笔', link: '/category/jottings/uniapp' },
         ],
         socialLinks: [
             { icon: 'github', link: 'https://github.com/JannyZ925' },
@@ -33,7 +33,15 @@ export default {
                 {
                     text: '知识',
                     items: [
-                        // This shows `/category/index.md` page.
+                        {
+                            text: '前端基础',
+                            items: [
+                                {
+                                    text: 'JavaScript',
+                                    link: '/category/knowledge/base/js'
+                                }
+                            ]
+                        },
                         {
                             text: 'vue',
                             items: [
@@ -47,6 +55,7 @@ export default {
                                 }
                             ]
                         }
+                        
                     ]
                 }
             ],
@@ -55,8 +64,12 @@ export default {
                     text: '随笔',
                     items: [
                         {
-                            text: 'jottings',
-                            link: '/category/jottings/jottings'
+                            text: 'uniapp',
+                            link: '/category/jottings/uniapp'
+                        },
+                        {
+                            text: 'taro',
+                            link: '/category/jottings/taro'
                         }
                     ]
 
