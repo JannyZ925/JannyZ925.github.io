@@ -54,8 +54,21 @@ export default {
                                     link: '/category/knowledge/vue/vue_cli'
                                 }
                             ]
+                        },
+                        {
+                            text: '项目',
+                            items: [
+                                {
+                                    text: '商城前台',
+                                    link: '/category/knowledge/projects/sph'
+                                },
+                                {
+                                    text: '商城后台',
+                                    link: '/category/knowledge/projects/sph-admin'
+                                }
+                            ]
                         }
-                        
+
                     ]
                 }
             ],
@@ -66,14 +79,8 @@ export default {
                         {
                             text: 'uniapp',
                             link: '/category/jottings/uniapp'
-                        },
-                        {
-                            text: 'taro',
-                            link: '/category/jottings/taro'
                         }
                     ]
-
-
                 }
             ],
         },
