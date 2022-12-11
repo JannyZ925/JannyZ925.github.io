@@ -23,8 +23,8 @@ export default {
             //     {
             //         text: 'Index',
             //         items: [
-            //             { text: 'category', link: '/category/' }, 
-            //             { text: 'Config', link: '/config/' }, 
+            //             { text: 'category', link: '/category/' },
+            //             { text: 'Config', link: '/config/' },
             //         ]
             //     }
             // ],
@@ -79,6 +79,10 @@ export default {
                         {
                             text: 'uniapp',
                             link: '/category/jottings/uniapp'
+                        },
+                        {
+                            text: 'git',
+                            link: '/category/jottings/git'
                         }
                     ]
                 }
