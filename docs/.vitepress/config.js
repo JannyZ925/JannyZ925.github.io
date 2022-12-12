@@ -83,6 +83,14 @@ export default {
                         {
                             text: 'git',
                             link: '/category/jottings/git'
+                        },
+                        {
+                            text: '仿京东项目C端',
+                            link: '/category/jottings/jd'
+                        },
+                        {
+                            text: '仿京东项目B端',
+                            link: '/category/jottings/jd-admin'
                         }
                     ]
                 }
