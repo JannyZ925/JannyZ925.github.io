@@ -169,6 +169,114 @@ mounted() {
 
 4. 将数据渲染到页面
 
+## 分类页的开发
+
+### 注意点
+
+1. 由于分类页面时按需加载，所以需要进行分包
+```js
+//  src/app.config.ts
+// 在pages目录下新建subpkg目录，专门存放需要进行分包的页面
+
+subpackages: [
+    {
+      root: "pages/subpkg",
+      pages: [
+        "category/index"
+      ]
+    }
+  ]
+```
+
+2. Taro绑定点击事件使用 @tap 而不是 @click
+
+### 步骤
+
+1. 给分类导航绑定点击事件
+```html
+<!--  src/pages/home/index.vue -->
+
+<view 
+    class="menu-item"
+    v-for="(item, index) in menuList"
+    :key="item.id"
+    @tap="clickMenuItemHandler(item)">
+    <image :src="item.imageUrl"/>
+</view>
+```
+
+2. 点击事件具体代码如下：
+```js
+//  src/pages/home/index.vue 
+
+// 点击分类导航项的事件
+clickMenuItemHandler(item) {
+  // 如果点击的是“分类”导航，则跳转到分类页面
+  if(item.title === "分类") {
+    Taro.navigateTo({url: '/pages/subpkg/category/index'})
+  }
+}
+```
+
+3. 调用接口获取数据
+```js
+//  src/pages/subpkg/category/index.vue
+
+mounted() {
+    // 显示加载提示框
+    loading(true);
+    // 发请求，给相应数据赋值
+    Promise.all([this.getCategoryList()]).then(([categoryList]) => {
+      this.categoryList = categoryList;
+      // 默认二级分类为第一个一级分类下的children
+      this.categoryLevel2 = categoryList[0].children
+      // 请求完毕后关闭加载提示
+      loading(false);
+    });
+}
+```
+
+4. 将数据渲染到页面
+```html
+<!--  src/pages/subpkg/category/index.vue  -->
+
+<view class="scroll-view-container">
+    <!-- 左侧滚动视图区域 -->
+    <scroll-view class="left-scroll-view" scroll-y="true">
+      <!-- 一级分类 -->
+        <view 
+            :class="['category-level1', active === index1 ? 'active' : '']" 
+            v-for="(c1, index1) in categoryList" 
+            :key="c1.catId" 
+            @tap="changeCategory(index1)">
+            {{c1.catName}}
+        </view>
+    </scroll-view>
+
+    <!-- 右侧滚动视图区域 -->
+    <scroll-view class="right-scroll-view" scroll-y="true">
+      <!-- 二级分类，如果该二级分类有children属性才显示 -->
+        <view 
+            class="category-level2" 
+            v-for="(c2, index2) in categoryLevel2" 
+            :key="c2.catId" 
+            v-show="'children' in c2">
+            <view class="category-level2-name">/ {{ c2.catName}} /</view>
+            <!-- 三级分类 -->
+            <view class="category-level3-list">
+                <view 
+                    class="category-level3" 
+                    v-for="(c3, index3) in c2.children" 
+                    :key="c3.catId">
+                    <image class="category-level3-img" :src="c3.catImage" />
+                    <text class="category-level3-name">{{ c3.catName }}</text>
+                </view>
+            </view>
+        </view>
+    </scroll-view>
+</view>
+```
+
 
 ## 其他
 - [语雀知识库链接](https://www.yuque.com/lexmin/rlww9b)
