@@ -277,6 +277,125 @@ mounted() {
 </view>
 ```
 
+## 商品模块的开发
+
+### 商品列表页
+1. 准备参数
+```js
+//  src/pages/subpkg/goodsList/index.vue
+
+// 参数对象
+queryObj: {
+    // 分类id
+    cid: "",
+    // 关键字
+    keyword: "",
+    // 是否为新品
+    isNew: false,
+    // 当前页码
+    pageNum: 1,
+    // 每页显示的数据条数
+    pageSize: 15,
+}
+```
+
+2. 发请求
+```js
+//  src/pages/subpkg/goodsList/index.vue
+
+// 获取商品列表
+async getGoodsList() {
+    loading(true);
+    // 发请求，获取新数据
+    const result = await request("/goods", "GET", this.queryObj);
+    // 如果没有新的数据，则显示提示文字
+    if (this.goodsList.length !== 0 && result.length === 0) this.showTips = true;
+    // 整合新旧数据
+    this.goodsList = [...this.goodsList, ...result];
+    // 停止下拉刷新
+    Taro.stopPullDownRefresh();
+    // 关闭加载提示
+    loading(false);
+}
+
+async onLoad(options) {
+    // 获取页面的参数
+    this.queryObj.cid = options.cid || "";
+    this.queryObj.keyword = options.keyword || "";
+    this.queryObj.isNew = options.isNew || false;
+    // 发起请求
+    await this.getGoodsList();
+}
+```
+
+3. 添加触底事件
+```js
+//  src/pages/subpkg/goodsList/index.vue
+
+// 触底事件
+onReachBottom() {
+    // 页数加1，再次发起请求
+    this.queryObj.pageNum += 1;
+    this.getGoodsList();
+}
+```
+
+4. 添加下拉刷新事件
+```js
+//  src/pages/subpkg/goodsList/index.vue
+
+// 下拉刷新事件
+onPullDownRefresh() {
+    this.queryObj.pageNum = 1;
+    // 清空商品列表
+    this.goodsList = [];
+    // 发起请求
+    this.getGoodsList();
+}
+```
+
+5. 将数据渲染到页面
+
+### 其他步骤
+1. 在首页点击瀑布流图片。跳转到商品列表（goodsList）页面
+2. 在分类页点击三级分类，跳转到商品列表（goodsList）页面
+3. 封装goodsItem组件，因为在goodsList页面、新品页面、购物车页面都要用到，可实现复用
+4. 将获取商品列表的代码封装为mixin，但onLoad()生命周期还是写在goodsList页面中，因为goodsList和new页面此时需要获取的参数不同，所以需要分开写
+
+### 新品页面
+
+1. 引入mixin
+```js
+//  src/pages/new/index.vue
+
+import mixin from "../../mixin/index";
+mixins: [mixin]
+```
+
+2. 完成onLoad()生命周期函数
+```js
+//  src/pages/new/index.vue
+
+async onLoad(options) {
+    // 设置参数
+    this.queryObj.isNew = true;
+    // 发起请求
+    await this.getGoodsList();
+}
+```
+
+3. 将数据渲染到页面
+```html
+<!--  src/pages/new/index.vue -->
+
+<view>
+    <view style="min-height: 100vh">
+        <goods-item v-for="(goods, index) in goodsList" :key="goods.goodsId" :goods="goods"/>
+    </view>
+    <view class="tips" v-if="showTips">我是有底线的~</view>  
+</view>
+```
+
 
 ## 其他
 - [语雀知识库链接](https://www.yuque.com/lexmin/rlww9b)
