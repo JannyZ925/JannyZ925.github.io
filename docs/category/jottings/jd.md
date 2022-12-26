@@ -396,6 +396,27 @@ async onLoad(options) {
 </view>
 ```
 
+### 开发search组件
+
+```html
+<view class="search-container">
+    <view class="search-input" @tap="clickSearchInputHandler">
+        <icon class="search-icon" type="search" size="20"/>
+        <text class="search-placeholder">搜索</text>
+    </view>
+</view>
+```
+
+```js
+methods: {
+    clickSearchInputHandler() {
+        Taro.navigateTo({
+        url: '/pages/subpkg/search/index'
+        })
+    }
+}
+```
+
 
 ## 其他
 - [语雀知识库链接](https://www.yuque.com/lexmin/rlww9b)
