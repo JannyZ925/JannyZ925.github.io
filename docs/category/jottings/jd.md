@@ -417,6 +417,165 @@ methods: {
 }
 ```
 
+### search 页面
+
+#### 获取搜索结果
+
+js代码：
+
+```js
+//  src/pages/subpkg/search/index.vue
+
+// 获取搜索结果
+async getSearchResults() {
+    loading(true);
+    this.searchResults = await request(`/goods/search?keyword=${this.keyword}`);
+    loading(false);
+},
+
+// 搜索框输入值改变事件
+onChange(stateName, value) {
+    // 将搜索框输入的值赋给keyword
+    this[stateName] = value.trim();
+    if(value.trim() === '') {
+        this.searchResults = [] 
+        return;
+    }
+    // 设置延时器，每0.5秒发一次请求，发请求之前要清除上一次的延时器
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+        this.getSearchResults();
+    }, 500);
+}
+```
+
+search输入框：
+```html
+<!--  src/pages/subpkg/search/index.vue -->  
+
+<view class="search-container">
+    <AtSearchBar
+        :value="keyword"
+        :onChange="onChange.bind(this, 'keyword')"
+        :onActionClick="()=>clickSearchButton(this.keyword)"
+    />
+</view>
+```
+
+搜索结果：
+```html
+<!--  src/pages/subpkg/search/index.vue -->  
+
+<!-- 搜索结果 -->
+<scroll-view class="search-results-container">
+    <view
+        class="search-results-item"
+        v-for="(result, index) in searchResults"
+        :key="index"
+    >
+        <view class="goods-name">{{ result.goodsName }}</view>
+        <view class='at-icon at-icon-chevron-right'></view>
+    </view>
+</scroll-view>
+```
+
+::: warning 注意
+    这里的事件函数如果要传递参数，不能直接写clickSearchButton(this.keyword)这样的形式，要写箭头函数，否则该函数体会立即执行
+:::
+
+
+#### 搜索历史
+
+监听搜索历史数组的改变：
+```js
+watch: {
+    searchHistory() {
+      // 将搜索历史保存到本地
+      Taro.setStorageSync("searchHistory", this.searchHistory);
+    }
+  }
+```
+
+搜索历史相关方法：
+```js
+// 点击搜索按钮事件
+clickSearchButton(keyword) {
+    // 将搜索关键词加入到搜索历史记录中
+    this.searchHistory.push(this.keyword);
+    this.goToGoodsList(keyword)
+},
+
+// 跳转到商品列表页面
+goToGoodsList(keyword) {
+    Taro.navigateTo({
+        url: `/pages/subpkg/goodsList/index?keyword=${keyword}`,
+    });
+},
+
+
+// 点清空按钮事件
+clickCleanIconHandler() {
+    Taro.showModal({
+        content: "确认删除全部搜索历史？",
+        success: (res) => {
+            if (res.confirm) {
+                // 将data中的搜索记录清空
+                this.searchHistory = [];
+            }
+        },
+    });
+}
+```
+
+获取搜索历史：
+```js
+mounted() {
+    // 从本地获取搜索历史
+    this.searchHistory = Taro.getStorageSync("searchHistory") || "[]";
+  }
+```
+
+对搜索历史数组进行处理：
+```js
+computed: {
+    // this.searchHistory.reverse() 反转搜索历史数组,最后搜索的排在最前面
+    /**
+     * 使用Set进行去重
+     * new Set(this.searchHistory.reverse())将Array转换为Set，进行去重
+     * ...将Set转换为Array
+     */
+    histories() {
+        return [...new Set([...this.searchHistory].reverse())];
+    },
+}
+```
+
+将数据渲染在页面上：
+```html
+<!--  src/pages/subpkg/search/index.vue -->  
+
+<!-- 搜索历史 -->
+<view class="search-history-container" v-if="searchHistory.length !== 0 && keyword === ''">
+    <view class="search-history-title">
+        <text>搜索历史</text>
+        <view class='at-icon at-icon-trash' @tap="clickCleanIconHandler"></view>
+    </view>
+    <view class="search-history-list">
+        <AtTag
+            class="search-history-item"
+            v-for="(history, index) in histories"
+            :key="index"
+            circle
+            type="primary"
+            size="normal"
+            :onClick="()=>goToGoodsList(history)"
+            >{{ history }}
+        </AtTag>
+    </view>
+</view>
+```
+
+
 
 ## 其他
 - [语雀知识库链接](https://www.yuque.com/lexmin/rlww9b)
