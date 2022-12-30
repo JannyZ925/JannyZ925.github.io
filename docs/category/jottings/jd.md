@@ -575,6 +575,71 @@ computed: {
 </view>
 ```
 
+## “我的”模块的开发
+
+### 登录
+
+1. html部分
+
+```html
+<view class="login" v-if="showLogin">
+    <AtForm class="form">
+        <AtInput 
+            name='phone' 
+            title='手机号' 
+            type='phone' 
+            placeholder='请输入手机号' 
+            :value="user.phone"
+            :onChange="onChange.bind(this, 'phone')" 
+            clear
+        />
+        <AtInput 
+            name='password' 
+            title='密码' 
+            type='password' 
+            placeholder='请输入密码' 
+            :value="user.password"
+            :onChange="onChange.bind(this, 'password')" 
+            clear
+        />
+        <AtButton type="primary" class="submitBtn" :onClick="handleClickSubmitBtn">登录</AtButton>
+    </AtForm>
+    <view class="tip">未注册的手机号登录成功后将自动注册</view>
+</view>
+```
+
+2. 准备参数
+
+```js
+// 用户的登录/注册信息
+user: {
+    phone: '',
+    password: ''
+}
+```
+
+3. 设计相关方法
+
+```js
+// 输入框的值改变
+onChange(stateName, value) {
+    this.user[stateName] = value;
+},
+
+async handleClickSubmitBtn() {
+    loading(true, "登录中...")
+    const res = await request('/user/login', "POST", this.user)
+    const icon = res === "登录成功！" ? 'success' : 'error'
+    Taro.showToast({
+        title: res,
+        icon,
+        duration: 2000
+    })
+    Taro.setStorageSync('user', this.user)
+    this.showLogin = false
+}
+```
+
 
 
 ## 其他
