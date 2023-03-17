@@ -84,18 +84,46 @@ console.log(sum); // 10
 ### 实现数组去重的方法
 
 ```js
-let ordinaryArray = [1, 2, 3, 1, 5, 3, 6, 8]
+let ordinaryArray = [1, 2, 3, 1, 5, 3, 6, 8];
 // 1、filter 与 indexOf 实现去重
 let newArray1 = ordinaryArray.filter((item, index, ordinaryArray) => {
-    return ordinaryArray.indexOf(item) === index
-})
+  return ordinaryArray.indexOf(item) === index;
+});
 
 // 2、reduce 与 includes 实现去重
 let newArray2 = ordinaryArray.reduce((uniqueArray, item) => {
-    return uniqueArray.includes(item) ? uniqueArray : [...uniqueArray, item]
-}, [])
+  return uniqueArray.includes(item) ? uniqueArray : [...uniqueArray, item];
+}, []);
 
 // 3、Set 实现去重
-let set = new Set(ordinaryArray)
-let newArray3 = Array.from(set)
+let set = new Set(ordinaryArray);
+let newArray3 = Array.from(set);
+```
+
+### for...of 和 for...in 的区别
+
+- for…of 遍历获取的是对象的键值，for…in 获取的是对象的键名；
+- for… in 会遍历对象的整个原型链，性能非常差不推荐使用，而 for … of 只遍历当前对象不会遍历原型链；
+- 对于数组的遍历，for…in 会返回数组中所有可枚举的属性(包括原型链上可枚举的属性)，for…of 只返回数组的下标对应的属性值；
+
+```js
+Object.prototype.objCustom = function() {}
+Array.prototype.arrayCustom = function() {}
+
+let iterable = [3, 5, 7]
+iterable.foo = 'hello'
+
+for(let i in iterable) {
+  console.log(i); // 0 1 2 foo arrayCustom objCustom
+}
+
+for(let i in iterable) {
+  if(iterable.hasOwnProperty(i)) {
+    console.log(i); // 0 1 2 foo
+  }
+}
+
+for(let i of iterable) {
+  console.log(i); // 3 5 7
+}
 ```
